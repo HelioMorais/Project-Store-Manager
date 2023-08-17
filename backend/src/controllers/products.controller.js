@@ -26,8 +26,20 @@ const insert = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const productId = Number(req.params.id);
+    const productToUpdate = req.body;
+    const { status, data } = await productsService.update(productId, productToUpdate);
+    return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   findAllProducts,
   findProductById,
   insert,
+  update,
 };
