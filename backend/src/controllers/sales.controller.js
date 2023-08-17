@@ -9,7 +9,6 @@ const findAllSales = async (_req, res) => {
 const findById = async (req, res) => {
   try {
   const salesId = Number(req.params.id);
-  console.log(salesId);
   const { status, data } = await salesService.findById(salesId);
   return res.status(mapStatusHTTP(status)).json(data);
   } catch (error) {
