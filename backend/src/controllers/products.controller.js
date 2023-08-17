@@ -16,7 +16,18 @@ const findProductById = async (req, res) => {
   }
 };
 
+const insert = async (req, res) => {
+  try {
+    const newProduct = req.body;
+    const { status, data } = await productsService.insert(newProduct);
+    return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   findAllProducts,
   findProductById,
+  insert,
 };

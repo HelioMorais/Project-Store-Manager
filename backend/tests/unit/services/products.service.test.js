@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { productModel } = require('../../../src/models');
 const { productsService } = require('../../../src/services');
 
-const { productsFromDB, productsFromModel, productByIdFromModel } = require('../mocks/products.mock');
+const { productsFromDB, productsFromModel, productByIdFromModel, createdProduct } = require('../mocks/products.mock');
 
 describe('Realizando testes - PRODUCTS SERVICE', function () {
   it('Recuperando todos os produtos com sucesso', async function () {
@@ -36,6 +36,22 @@ describe('Realizando testes - PRODUCTS SERVICE', function () {
     expect(responseService.data).to.be.an('object');
     expect(responseService.data).to.be.deep.equal({ message: 'Product not found' });
   });
+
+  it('Inserindo um novo produto', async function () {
+    sinon.stub(productModel, 'insert').resolves(4);
+    sinon.stub(productModel, 'findyById').resolves(createdProduct);
+
+    const newProduct = {
+      name: 'ProdutoX',
+    };
+
+    const responseService = await productsService.insert(newProduct);
+
+    expect(responseService.status).to.be.equal('CREATED');
+    expect(responseService.data).to.be.an('object');
+    expect(responseService.data).to.be.deep.equal(createdProduct);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
