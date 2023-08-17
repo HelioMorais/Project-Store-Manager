@@ -1,31 +1,30 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const modelsDeProdutos = require('../../../src/models/product.model');
-const connection = require('../../../src/configuration/connection');
-const {
-  getAllProductsFromDB,
-  getAllProductsFromModel,
-  getProductByIdFromDB,
-  getProductByIdFromModel,
-} = require('../mocks/products.mock');
+const connection = require('../../../src/models/connection');
+const { productModel } = require('../../../src/models');
+const { productsFromDB, productsFromModel, productByIdFromModel } = require('../mocks/products.mock');
 
-describe('Testes unitários dos Modelos de Produtos', function () {
+describe('Realizando testes - PRODUCTS MODEL', function () {
+  it('Recuperando todos os produtos com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves([productsFromDB]);
+
+    const responseModel = await productModel.findAll();
+
+    expect(responseModel).to.be.an('array');
+    expect(responseModel).to.have.length(3);
+    expect(responseModel).to.be.deep.equal(productsFromModel);
+  });
+  it('Recuperando um produto por id com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves([[productByIdFromModel]]);
+
+    const id = 1;
+
+    const responseModel = await productModel.findyById(id);
+
+    expect(responseModel).to.be.an('object');
+    expect(responseModel).to.be.deep.equal(productByIdFromModel);
+  });
   afterEach(function () {
     sinon.restore();
-  });
-
-  it('getAllProducts deve retornar um array com todos os produtos', async function () {
-    sinon.stub(connection, 'execute').resolves(getAllProductsFromDB);
-    const produtos = await modelsDeProdutos.getAllProducts();
-    expect(produtos).to.be.an('array');
-    expect(produtos).to.have.lengthOf(3);
-    expect(produtos).to.deep.equal(getAllProductsFromModel);
-  });
-
-  it('getProductById deve retornar um objeto com o produto', async function () {
-    sinon.stub(connection, 'execute').resolves(getProductByIdFromDB);
-    const produto = await modelsDeProdutos.getProductById(1);
-    expect(produto).to.be.an('object');
-    expect(produto).to.deep.equal(getProductByIdFromModel);
   });
 });

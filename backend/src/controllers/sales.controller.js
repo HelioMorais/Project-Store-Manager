@@ -1,23 +1,23 @@
 const { salesService } = require('../services');
-const errorMap = require('../utils/errorMap');
+const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
-const response = (res, result) => {
-    const { status, data } = result;
-    return res.status(errorMap(status)).json(data);
-  };
-  
-  const getAll = async (req, res) => {
-    const result = await salesService.getAll();
-    return response(res, result);
-  };
-  
-  const getById = async (req, res) => {
-    const { id } = req.params;
-    const result = await salesService.getById(id);
-    return response(res, result);
-  };
-  
-  module.exports = {
-    getAll,
-    getById,
-  };
+const findAllSales = async (_req, res) => {
+  const { status, data } = await salesService.findAll();
+  return res.status(mapStatusHTTP(status)).json(data);
+};
+
+const findById = async (req, res) => {
+  try {
+  const salesId = Number(req.params.id);
+  console.log(salesId);
+  const { status, data } = await salesService.findById(salesId);
+  return res.status(mapStatusHTTP(status)).json(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+module.exports = {
+  findAllSales,
+  findById,
+};

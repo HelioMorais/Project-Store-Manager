@@ -1,94 +1,55 @@
-const productDate = '2023-08-14T21:51:46.000Z';
-
-const allSalesFromDB = [
+const salesFromModel = [
   {
     saleId: 1,
-    date: productDate,
+    date: '2023-06-28T23:40:51.000Z',
     productId: 1,
     quantity: 5,
   },
   {
     saleId: 1,
-    date: productDate,
+    date: '2023-06-28T23:40:51.000Z',
     productId: 2,
     quantity: 10,
   },
   {
     saleId: 2,
-    date: productDate,
+    date: '2023-06-28T23:40:51.000Z',
     productId: 3,
     quantity: 15,
   },
 ];
-
-const saleFromDB = [
-  {
-    date: productDate,
-    productId: 1,
-    quantity: 5,
-  },
-  {
-    date: productDate,
-    productId: 2,
-    quantity: 10,
-  },
-];
-
-const allSalesFromModel = [
-  {
-    saleId: 1,
-    date: productDate,
-    productId: 1,
-    quantity: 5,
-  },
-  {
-    saleId: 1,
-    date: productDate,
-    productId: 2,
-    quantity: 10,
-  },
-  {
-    saleId: 2,
-    date: productDate,
-    productId: 3,
-    quantity: 15,
-  },
-];
-
-const saleFromModel = [
-  {
-    date: productDate,
-    productId: 1,
-    quantity: 5,
-  },
-  {
-    date: productDate,
-    productId: 2,
-    quantity: 10,
-  },
-];
-
-const allSalesFromServiceSuccessful = {
+const salesSuccessful = {
   status: 'SUCCESSFUL',
-  data: allSalesFromModel,
+  data: salesFromModel,
 };
 
-const saleFromServiceSuccessful = {
+const salesFoundById = [
+  {
+    date: '2023-06-29T13:18:56.000Z',
+    productId: 1,
+    quantity: 5,
+  },
+  {
+    date: '2023-06-29T13:18:56.000Z',
+    productId: 2,
+    quantity: 10,
+  },
+];
+
+const salesByIdSuccessful = {
   status: 'SUCCESSFUL',
-  data: saleFromModel,
+  data: salesFoundById,
 };
 
-const saleFromServiceNotFound = { 
-  status: 'NOT_FOUND', 
+const salesByIdNotFound = {
+  status: 'NOT_FOUND',
   data: { message: 'Sale not found' },
 };
 
 module.exports = {
-  allSalesFromDB,
-  saleFromDB,
-  allSalesFromModel,
-  saleFromModel,
-  allSalesFromServiceSuccessful,
-  saleFromServiceSuccessful,
-  saleFromServiceNotFound,
+  salesFromModel,
+  salesSuccessful,
+  salesFoundById,
+  salesByIdSuccessful,
+  salesByIdNotFound,
 };
