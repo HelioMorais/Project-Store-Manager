@@ -52,6 +52,18 @@ describe('Realizando testes - PRODUCTS SERVICE', function () {
     expect(responseService.data).to.be.deep.equal(createdProduct);
   });
 
+  it('Error ao inserir um novo produto com o nome menor do que 5 caracteres', async function () {
+    const newProduct = {
+      name: 'Prod',
+    };
+
+    const responseService = await productsService.insert(newProduct);
+
+    expect(responseService.status).to.be.equal('INVALID_VALUE');
+    expect(responseService.data).to.be.an('object');
+    expect(responseService.data).to.be.deep.equal({ message: '"name" length must be at least 5 characters long' });
+  });
+
   afterEach(function () {
     sinon.restore();
   });

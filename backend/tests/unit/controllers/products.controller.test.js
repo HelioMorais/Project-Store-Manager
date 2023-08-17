@@ -7,8 +7,8 @@ chai.use(sinonChai);
 
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
-const { productsFromServiceSuccessful, productsFromModel, productsIDFromServiceSuccessful, productsFromServiceNotFound,
-   productFromServiceCreated, createdProduct } = require('../mocks/products.mock');
+const { productsFromServiceSuccessful, productsFromModel, productsIDFromServiceSuccessful, productsFromServiceNotFound, productFromServiceCreated,
+   createdProduct, productFromServiceCreatedInvalid } = require('../mocks/products.mock');
 
 describe('Realizando testes - PRODUCTS CONTROLLER', function () {
   it('Recuperando todos os produtos com sucesso - status 200', async function () {
@@ -65,6 +65,20 @@ describe('Realizando testes - PRODUCTS CONTROLLER', function () {
     await productsController.insert(req, res);
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(createdProduct);
+  });
+
+  it('Erro ao inserir um novo produto com o o nome menor do que 5 caracteres', async function () {
+    sinon.stub(productsService, 'insert').resolves(productFromServiceCreatedInvalid);
+
+    const req = { params: { }, body: { name: 'Pr' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.insert(req, res);
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith(sinon.match.has('message'));
   });
   
   afterEach(function () {

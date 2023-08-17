@@ -60,6 +60,11 @@ const productFromServiceCreated = {
     data: createdProduct,
 };
 
+const productFromServiceCreatedInvalid = {
+  status: 'INVALID_VALUE',
+  data: { message: '"name" length must be at least 5 characters long' },
+};
+
 module.exports = {
   productsFromDB,
   productsFromModel,
@@ -70,4 +75,5 @@ module.exports = {
   insertIdProductCreated,
   productFromServiceCreated,
   createdProduct,
+  productFromServiceCreatedInvalid,
 };
