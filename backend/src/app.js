@@ -1,12 +1,14 @@
 const express = require('express');
-const productRouter = require('./routers/product.router');
+
+const { productsRoutes } = require('./routes');
 
 const app = express();
 app.use(express.json());
+
+app.use('/products', productsRoutes);
 // não remova esse endpoint, é para o avaliador funcionaaaar
 app.get('/', (_request, response) => {
   response.json({ status: 'Store Manager UP!' });
 });
 
-app.use('/products', productRouter);
 module.exports = app;

@@ -7,7 +7,10 @@ const getAllProducts = async () => {
 
 const getProductById = async (id) => productModel.getProductById(id);
 
+const create = async (name) => productModel.create(name);
+
 module.exports = {
   getAllProducts,
   getProductById,
+  create,
 };

@@ -1,5 +1,6 @@
 const { productService } = require('../services');
 const errorMap = require('../utils/errorMap');
+const salesController = require('./sales.controller');
 
 const getAllProducts = async (_req, res) => {
   const { type, message } = await productService.getAllProducts();
@@ -17,4 +18,5 @@ const getProductById = async (req, res) => {
 module.exports = {
   getAllProducts,
   getProductById,
+  salesController,
 };
